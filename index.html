@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Telefónica</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app" class="container">
+        <h1>Agenda Telefónica</h1>
+ <div class="form">
+            <h2>Nuevo Contacto</h2>
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" v-model="nuevoContacto.nombre" placeholder="Nombre">
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono:</label>
+                <input type="text" v-model="nuevoContacto.telefono" placeholder="Teléfono">
+     </div>
+<div class="form-group">
+                <label for="categoria">Categoría:</label>
+                <select v-model="nuevoContacto.categoria">
+                    <option value="Familiar">Familiar</option>
+         <option value="Amistad">Amistad</option>
+                    <option value="Laboral">Laboral</option>
+                    <option value="Otro">Amoroso</option> 
+                </select>
+            </div>
+            <button @click="agregarContacto">Agregar</button>
+        </div>
+ <table>
+     <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Categoría</th>
+                    <th>Mensajes</th>
+                    <th>Llamadas</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(contacto, index) in contactos" :key="index">
+                    <td>{{ contacto.nombre }}</td>
+                    <td>{{ contacto.telefono }}</td>
+                    <td>{{ contacto.categoria }}</td>
+                    <td>
+                        <button @click="modificarMensajes(contacto, 1)" :disabled="contacto.mensajes >= 25">+</button>
+                        {{ contacto.mensajes }}
+                        <button @click="modificarMensajes(contacto, -1)" :disabled="contacto.mensajes <= 0">-</button>
+                    </td>
+                    <td>
+                        <button @click="modificarLlamadas(contacto, 1)" :disabled="contacto.llamadas >= 15">+</button>
+                        {{ contacto.llamadas }}
+                        <button @click="modificarLlamadas(contacto, -1)" :disabled="contacto.llamadas <= 0">-</button>
+                    </td>
+                    <td><button class="delete" @click="eliminarContacto(index)">Eliminar</button></td>
+                </tr>
+                <tr v-if="contactos.length === 0">
+                    <td colspan="6">No hay contactos agregados</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="totals">
+            <p>Total de Contactos: {{ contactos.length }}</p>
+     <p>Total de Mensajes: {{ totalMensajes }}</p>
+            <p>Total de Llamadas: {{ totalLlamadas }}</p>
+        </div>
+    </div>
+ <script src="https://cdn.jsdelivr.net/npm/vue@2"></script> <script src="script.js"></script>
+</body>
+</html>
